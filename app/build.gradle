@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.andreibacalu.android.complesportiv"
         minSdkVersion 15
@@ -20,42 +20,48 @@ android {
 }
 
 ext {
-    supportLibraryVersion = '25.3.1'
-    retrofitVersion = '2.0.2'
+    supportLibraryVersion = '27.1.1'
+    retrofitVersion = '2.4.0'
     daggerVersion = '2.2'
-    timberVersion = '4.1.2'
-    rxJavaVersion = '1.1.5'
-    rxAndroidVersion = '1.2.0'
+    timberVersion = '4.7.0'
+    rxJavaVersion = '2.x.x'
+    rxAndroidVersion = '2.0.2'
 }
 
 dependencies {
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.0'
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
-    provided 'javax.annotation:jsr250-api:1.0'
+    compileOnly 'javax.annotation:jsr250-api:1.0'
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+    /*implementation ('com.facebook.android:facebook-android-sdk:4.33.0') {
+        exclude group: 'com.android.support'
+    }*/
+    implementation 'com.facebook.android:facebook-android-sdk:4.33.0'
+
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation "com.google.dagger:dagger:$daggerVersion"
+
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+
+    testImplementation 'junit:junit:4.12'
+
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
-    compile "com.android.support:design:$supportLibraryVersion"
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
-
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-
-    compile 'com.google.code.gson:gson:2.6.1'
-    compile "com.google.dagger:dagger:$daggerVersion"
-
-    compile "com.jakewharton.timber:timber:$timberVersion"
-
-    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
-    compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-
-    compile "io.reactivex:rxandroid:$rxAndroidVersion"
-    compile "io.reactivex:rxjava:$rxJavaVersion"
-
-    testCompile 'junit:junit:4.12'
 }

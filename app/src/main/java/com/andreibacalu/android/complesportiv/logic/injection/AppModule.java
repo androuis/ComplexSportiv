@@ -4,14 +4,18 @@ import com.andreibacalu.android.complesportiv.BuildConfig;
 import com.andreibacalu.android.complesportiv.logic.data.api.ApiService;
 import com.andreibacalu.android.complesportiv.logic.data.Constants;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -27,7 +31,13 @@ public class AppModule {
 
         logging.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
+        CookieHandler cookieHandler = new CookieManager();
+
         return new OkHttpClient.Builder()
+                .cookieJar(new JavaNetCookieJar(cookieHandler))
+                .connectTimeout(5, TimeUnit.MINUTES)
+                .readTimeout(5, TimeUnit.MINUTES)
+                .writeTimeout(5, TimeUnit.MINUTES)
                 .addInterceptor(logging)
                 .build();
     }
@@ -38,7 +48,7 @@ public class AppModule {
         return new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build();
     }

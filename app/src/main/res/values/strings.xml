@@ -1,6 +1,6 @@
 <resources>
-    <string name="facebook_app_id">1979513402333185</string>
-    <string name="fb_login_protocol_scheme">fb1979513402333185</string>
+    <string name="facebook_app_id" translatable="false">1979513402333185</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1979513402333185</string>
 
     <string name="app_name">Comple Sportiv</string>
     <string name="action_settings">Settings</string>
